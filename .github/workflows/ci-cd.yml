@@ -1,0 +1,28 @@
+
+
+name: CI/CD Workflow
+
+on:
+  push
+  
+jobs:
+  run-tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1  # Updated to use v3
+        with:
+          submodules: recursive
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.0'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run tests
+        run: pytest
