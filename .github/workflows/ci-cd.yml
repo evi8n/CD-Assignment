@@ -55,9 +55,6 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           debug: true
 
-      - name: Copy deploy.sh to GitHub Actions workspace
-        run: cp deploy.sh $GITHUB_WORKSPACE/deploy.sh
-
       - name: Deploy to Server
         run: |
           cd $GITHUB_WORKSPACE
