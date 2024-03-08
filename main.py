@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    # Get a random quote from the Quotable REST API
+    #  Get a random quote from the Quotable REST API
     response = requests.get("https://api.quotable.io/random")
     if response.status_code == 200:
         quote_data = response.json()
@@ -21,7 +21,7 @@ def index():
 
 @app.route("/new_quote")
 def new_quote():
-    # Get a new random quote from the Quotable REST API
+    #  Get a new random quote from the Quotable REST API
     response = requests.get("https://api.quotable.io/random")
     if response.status_code == 200:
         quote_data = response.json()
@@ -31,7 +31,7 @@ def new_quote():
         quote = "Error fetching quote"
         author = "Unknown"
 
-    # Return the new quote as JSON
+    #  Return the new quote as JSON
     return jsonify({"quote": quote, "author": author})
 
 
