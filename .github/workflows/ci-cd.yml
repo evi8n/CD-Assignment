@@ -1,10 +1,10 @@
-
-
 name: CI/CD Workflow
 
 on:
-  push
-  
+  push:
+    branches:
+      - main
+
 jobs:
   run-tests:
     runs-on: ubuntu-20.04
@@ -28,3 +28,42 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: run-tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1 
+        with:
+          submodules: recursive
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.0'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install Flask
+
+      - name: Set Up SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          cd $GITHUB_WORKSPACE
+
+          source venv/Scripts/activate
+
+          git pull origin main
+
+          ssh root@138.68.100.201 'bash -s' < deploy.sh
+
+          systemctl restart random_quotes_app.service
+
+          systemctl status random_quotes_app
