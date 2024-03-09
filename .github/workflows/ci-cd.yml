@@ -57,10 +57,9 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh root@138.68.100.201 << EOF
+          ssh root@138.68.100.201 
           cd /Users/evisi/Documents/Winc/random_quotes_app
           git pull origin main
 
           systemctl restart random_quotes_app.service
           systemctl status random_quotes_app
-        EOF
