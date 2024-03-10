@@ -50,7 +50,7 @@ jobs:
           pip install Flask
 
       - name: Set Up SSH
-        uses: webfactory/ssh-agent@v0.5.5
+        uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
