@@ -59,6 +59,5 @@ jobs:
           script: |
             cd /root/random_quotes_app/random_quotes_app
             git pull origin main
-            systemctl unmask random_quotes_app.service
             systemctl restart random_quotes_app.service
             systemctl status random_quotes_app
