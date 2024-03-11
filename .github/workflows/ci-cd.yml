@@ -61,4 +61,3 @@ jobs:
             git pull origin main
             systemctl restart random_quotes_app.service
             systemctl status random_quotes_app
-          debug: true
