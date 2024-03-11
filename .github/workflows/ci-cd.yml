@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.1 
+        uses: actions/checkout@v4.1.1
         with:
           submodules: recursive
 
@@ -34,7 +34,7 @@ jobs:
     needs: run-tests
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.1 
+        uses: actions/checkout@v4.1.1
         with:
           submodules: recursive
 
@@ -49,27 +49,15 @@ jobs:
           pip install -r requirements.txt
           pip install Flask
 
-      - name: Remote SSH Command
-        on:
-          push:
-        jobs:
-          build:
-            name: Build
-            runs-on: ubuntu-latest
-            steps:
-              - name: Executing remote SSH commands using password
-                uses: appleboy/ssh-action@v1.0.3
-                with:
-                  host: ${{ secrets.HOST }}
-                  username: ${{ secrets.USERNAME }}
-                  password: ${{ secrets.PASSWORD }}
-                  port: ${{ secrets.PORT }}
-                  script: |
-                    cd /Users/evisi/Documents/Winc/random_quotes_app
-                    git pull origin main
-                    systemctl restart random_quotes_app.service
-                    systemctl status random_quotes_app
-
       - name: Deploy to Server
-        run: |
-          ssh root@138.68.100.201 'cd /Users/evisi/Documents/Winc/random_quotes_app && git pull origin main && systemctl restart random_quotes_app.service && systemctl status random_quotes_app'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /Users/evisi/Documents/Winc/random_quotes_app
+            git pull origin main
+            systemctl restart random_quotes_app.service
+            systemctl status random_quotes_app
