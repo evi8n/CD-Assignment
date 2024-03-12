@@ -49,6 +49,11 @@ jobs:
           pip install -r requirements.txt
           pip install Flask
 
+      - name: Run Gunicorn
+        run: |
+          cd /root/random_quotes_app
+          gunicorn -c gunicorn_config.py random_quotes_app:main
+
       - name: Deploy to Server
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -57,7 +62,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /root/random_quotes_app/random_quotes_app
+            cd /root/random_quotes_app
             git pull origin main
             systemctl restart random_quotes_app.service
             systemctl status random_quotes_app
