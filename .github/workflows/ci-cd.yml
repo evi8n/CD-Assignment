@@ -49,20 +49,24 @@ jobs:
           pip install -r requirements.txt
           pip install Flask
 
+      - name: Copy SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+
       - name: Run Gunicorn
         run: |
           cd /root/random_quotes_app
-          gunicorn -c gunicorn_config.py random_quotes_app:main
+          chmod 600 ~/.ssh/id_rsa
+          gunicorn -c gunicorn_config.py --bind=${{ secrets.HOST }}:8000 random_quotes_app:main
 
       - name: Deploy to Server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /root/random_quotes_app
-            git pull origin main
-            systemctl restart random_quotes_app.service
-            systemctl status random_quotes_app
+        run: |
+          cd /root/random_quotes_app
+          git pull origin main
+          systemctl restart random_quotes_app.service
+          systemctl status random_quotes_app
