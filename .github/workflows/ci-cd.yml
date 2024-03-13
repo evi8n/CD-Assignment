@@ -59,7 +59,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
-          run: |
+          script: |
             cd /home/random_quotes_app
             pip install gunicorn
             python -m pip install --upgrade pip
@@ -71,6 +71,8 @@ jobs:
             git pull origin main
             systemctl restart main
             systemctl status main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # - name: Install Dependencies
       #   run: |
