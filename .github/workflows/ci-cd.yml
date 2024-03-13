@@ -78,6 +78,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            cd /home/random_quotes_app
             git pull origin main
             systemctl restart main
             systemctl status main
