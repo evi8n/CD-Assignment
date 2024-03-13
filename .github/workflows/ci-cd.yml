@@ -58,7 +58,8 @@ jobs:
       - name: Run Gunicorn
         run: |
           chmod 600 ~/.ssh/id_rsa
-          gunicorn -c gunicorn_config.py --bind=138.68.100.201:8000 random_quotes_app.main:app
+          gunicorn main:app --bind 0.0.0.0
+          gunicorn -c gunicorn_config.py --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
 
       - name: Deploy to Server
         run: |
