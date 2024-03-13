@@ -51,6 +51,7 @@ jobs:
           ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.HOST }}
 
       - name: Remote SSH Command
         uses: appleboy/ssh-action@v1.0.3
