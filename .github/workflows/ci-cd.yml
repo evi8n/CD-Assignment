@@ -25,6 +25,7 @@ jobs:
           pip install -r requirements.txt
           pip install Flask
           pip install pytest
+          pip install gunicorn
 
       - name: Run tests
         run: pytest
