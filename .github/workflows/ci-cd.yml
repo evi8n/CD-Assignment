@@ -59,7 +59,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
-          script: |
+          run: |
             cd /home/random_quotes_app
             pip install gunicorn
             python -m pip install --upgrade pip
