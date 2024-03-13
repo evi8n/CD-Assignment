@@ -52,6 +52,19 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Remote SSH Command
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/random_quotes_app
+            git pull origin main
+            systemctl restart main
+            systemctl status main
+
       - name: Install Dependencies
         run: |
           pip install gunicorn
@@ -70,19 +83,6 @@ jobs:
           git pull origin main
           systemctl restart main
           systemctl status main
-
-      - name: Remote SSH Command
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /home/random_quotes_app
-            git pull origin main
-            systemctl restart main
-            systemctl status main
 
       - name: Debug
         run: |
