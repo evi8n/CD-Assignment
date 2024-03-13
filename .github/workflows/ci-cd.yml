@@ -71,6 +71,18 @@ jobs:
           systemctl restart main
           systemctl status main
 
+      - name: Remote SSH Command
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            git pull origin main
+            systemctl restart main
+            systemctl status main
+
       - name: Debug
         run: |
           pwd
