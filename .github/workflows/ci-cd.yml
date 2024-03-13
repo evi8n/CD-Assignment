@@ -55,9 +55,8 @@ jobs:
 
       - name: Run Gunicorn
         run: |
-          source $GITHUB_WORKSPACE/venv/Scripts/activate
           chmod 600 ~/.ssh/id_rsa
-          $GITHUB_WORKSPACE/gunicorn -c gunicorn_config.py --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
+          $GITHUB_WORKSPACE/gunicorn -c $GITHUB_WORKSPACE/gunicorn_config.py --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
 
       - name: Deploy to Server
         run: |
