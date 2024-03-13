@@ -25,7 +25,6 @@ jobs:
           pip install -r requirements.txt
           pip install Flask
           pip install pytest
-          pip install gunicorn
 
       - name: Run tests
         run: pytest
@@ -53,10 +52,13 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
 
+      - name: Install Gunicorn
+        run: pip install gunicorn
+
       - name: Run Gunicorn
         run: |
           chmod 600 ~/.ssh/id_rsa
-          /home/runner/work/_temp/gunicorn -c gunicorn_config.py --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
+          gunicorn -c gunicorn_config.py --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
 
       - name: Deploy to Server
         run: |
