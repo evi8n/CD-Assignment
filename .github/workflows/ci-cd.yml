@@ -70,31 +70,12 @@ jobs:
             pip install Flask
             pip install pytest
 
-            gunicorn --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
+            #gunicorn --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
             git pull origin main
             systemctl restart main
             systemctl status main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # - name: Install Dependencies
-      #   run: |
-      #     pip install gunicorn
-      #     python -m pip install --upgrade pip
-      #     pip install -r requirements.txt
-      #     pip install Flask
-      #     pip install pytest
-
-      # - name: Run Gunicorn
-      #   run: |
-      #     chmod 600 ~/.ssh/id_rsa
-      #     gunicorn --bind=${{ secrets.HOST }}:8000 random_quotes_app.main:app
-
-      # - name: Deploy to Server
-      #   run: |
-      #     git pull origin main
-      #     systemctl restart main
-      #     systemctl status main
 
       - name: Debug
         run: |
