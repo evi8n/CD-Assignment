@@ -23,8 +23,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install Flask
-          pip install pytest
 
       - name: Run tests
         run: pytest
@@ -43,16 +41,6 @@ jobs:
         with:
           python-version: '3.11.0'
 
-      - name: Copy SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          HOST: ${{ secrets.HOST }}
-
       - name: Remote SSH Command
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -64,18 +52,6 @@ jobs:
 
             chmod 600 ~/.ssh/id_rsa
 
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
-            pip install Flask
-            pip install pytest
-
             git pull origin main
             systemctl restart main
             systemctl status main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Debug
-        run: |
-          pwd
-          ls -la
