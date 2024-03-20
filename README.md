@@ -1,6 +1,6 @@
 # CD-Assignment
 
-The three components of my solution that I should probably mention are GitHub Actions, the Virtual Private Server (VPS), and SSH keys. From what I gather, GitHub Actions is the robot automating everything and coordinating deployment procedures triggered by code modifications. The VPS is where my Flask-app lives, providing the platform for everything to run. The SSH keys behave as a lock and key, allowing secure communication between GitHub and the VPS.
+The three components of my solution that I should probably mention, are GitHub Actions, the Virtual Private Server (VPS), and SSH keys. From what I gather, GitHub Actions is the robot automating everything and coordinating deployment procedures triggered by code modifications. The VPS is where my Flask-app lives, providing the platform for everything to run. The SSH keys behave as a lock and key, allowing secure communication between GitHub and the VPS.
 
 The main problem that I encoutered was basicaly figuring out how everything connects to everything else (gunicorn, nginx, server, github actions) and what each one's role was exactly. Another problem was making right use of the SSH keys (while figuring out where to put each one and how to use GitHub secrets) and the third problem was figuring out how to use appleboy-ssh action.
 
