@@ -53,5 +53,5 @@ jobs:
             chmod 600 ~/.ssh/id_rsa
 
             git pull origin main
-            systemctl restart main
-            systemctl status main
+            systemctl restart gunicorn
+            systemctl status gunicorn
