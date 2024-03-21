@@ -49,6 +49,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            cd /home/random_quotes_app
 
             chmod 600 ~/.ssh/id_rsa
 
